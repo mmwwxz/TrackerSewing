@@ -1,0 +1,37 @@
+<!-- templates/add_window_expense.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Добавить запись</h1>
+    <form method="post" action="{% url 'add_window_expense' %}" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_window_model_name" class="form-label">Модель окна:</label>
+            <input type="text" name="window_model_name" id="id_window_model_name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_glass" class="form-label">Стекло:</label>
+            <input type="text" name="glass" id="id_glass" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_frame" class="form-label">Рама:</label>
+            <input type="text" name="frame" id="id_frame" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_fittings" class="form-label">Фурнитура:</label>
+            <input type="text" name="fittings" id="id_fittings" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_installation" class="form-label">Установка:</label>
+            <input type="text" name="installation" id="id_installation" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_other" class="form-label">Другое:</label>
+            <input type="text" name="other" id="id_other" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить запись</button>
+        <a href="{% url 'window_expenses_list' %}" class="btn btn-secondary m-2">Назад</a>
+    </form>
+</div>
+{% endblock %}

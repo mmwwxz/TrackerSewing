@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Добавить Запись</h1>
+    <form method="post" action="{% url 'add_window_factory_record' %}" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.label_tag }}
+            {{ form }}
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить Запись</button>
+        <a href="{% url 'window_factory_record_list' %}" class="btn btn-secondary m-2">Назад</a>
+    </form>
+</div>
+{% endblock %}

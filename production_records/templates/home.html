@@ -1,0 +1,16 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Главная страница</h1>
+    <div class="mb-3">
+        <a href="{% url 'record_list' %}" class="btn btn-primary">ФАБРИКА (пошив)</a>
+        <a href="{% url 'expenses_list' %}" class="btn btn-primary">РАСХОДЫ (ткань, пошив, фурнитура)</a>
+    </div>
+    <div>
+        <a href="{% url 'window_factory_record_list' %}" class="btn btn-primary">ФАБРИКА (окна)</a>
+        <a href="{% url 'window_expenses_list' %}" class="btn btn-primary">РАСХОДЫ (окна)</a>
+    </div>
+</div>
+{% endblock %}

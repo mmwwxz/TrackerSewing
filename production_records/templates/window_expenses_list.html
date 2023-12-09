@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>РАСХОДЫ НА ОКНА</h1>
+
+    <!-- Форма фильтрации -->
+    <form method="get" action="{% url 'window_expenses_list' %}" class="mb-3">
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label for="window_model_filter" class="form-label">Модель окна:</label>
+                <input type="text" name="window_model_filter" id="window_model_filter" class="form-control"
+                       value="{{ window_model_filter }}">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="date_filter_start" class="form-label">С какой даты:</label>
+                <input type="date" name="date_filter_start" id="date_filter_start" class="form-control"
+                       value="{{ date_filter_start }}">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="date_filter_end" class="form-label">До какой даты:</label>
+                <input type="date" name="date_filter_end" id="date_filter_end" class="form-control"
+                       value="{{ date_filter_end }}">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-outline-primary m-2" style="margin-left: auto !important;">Фильтр</button>
+                    <a href="{% url 'window_expenses_list' %}" class="btn btn-outline-secondary m-2">Очистить</a>
+                </div>
+            </div>
+        </div>
+    </form>
+    <a href="{% url 'add_window_expense' %}" class="btn btn-outline-primary">Создать</a>
+    <a href="{% url 'export_window_expenses' %}?date_filter_start={{ date_filter_start }}&date_filter_end={{ date_filter_end }}&window_model_filter={{ window_model_filter }}"
+       class="btn btn-success m-2">
+        <img style="width: 25px; height: 25px !important;"
+             src="https://i0.wp.com/olap.com/wp-content/uploads/2013/11/Excel_2013_logo.png?fit=256%2C256&ssl=1">
+        Экспорт Excel
+    </a>
+
+    <!-- Таблица расходов -->
+    <div class="table-responsive mt-3">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Модель окна</th>
+                <th>Стекло</th>
+                <th>Рама</th>
+                <th>Фурнитура</th>
+                <th>Установка</th>
+                <th>Другое</th>
+                <th>Итого</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.date|date:"d.m.Y" }}</td>
+                <td>{{ expense.window_model_name }}</td>
+                <td>{{ expense.glass }}</td>
+                <td>{{ expense.frame }}</td>
+                <td>{{ expense.fittings }}</td>
+                <td>{{ expense.installation }}</td>
+                <td>{{ expense.other }}</td>
+                <td>{{ expense.total }}</td>
+                <td>
+                    <a href="{% url 'edit_window_expense' pk=expense.pk %}" class="btn btn-secondary btn-sm">Редактировать</a>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="6"></td>
+                <td class="fw-bold">Итого:</td>
+                <td class="fw-bold">{{ total_total }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    {% load bootstrap5 %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Production Records{% endblock %}</title>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    {% bootstrap_css %}
+
+    <!-- Bootstrap Popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '../static/css/style.css' %}">
+
+    <!-- Optional: Add other meta tags, stylesheets, or scripts here -->
+</head>
+<body>
+<style>
+    body {
+        padding-top: 65px; /* Используйте значение высоты вашего навигационного бара */
+    }
+
+    @media (max-width: 767px) {
+        body {
+            padding-top: 0; /* Убираем верхний отступ для маленьких устройств */
+        }
+
+        .navbar {
+            position: relative;
+        }
+
+        .navbar-collapse {
+            position: absolute;
+            top: 60px; /* Выставляем отступ от верха экрана, равный высоте навигационного бара */
+            left: 0;
+            z-index: 1000;
+            background-color: #343a40; /* Цвет фона для выделения навигационного бара */
+        }
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">Лого</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse navbar-dark bg-dark" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Профиль</a>
+                </li>
+                {% else %}
+                <!-- Ссылки для неавторизованных пользователей -->
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container mt-5">
+    {% block content %}{% endblock %}
+</div>
+
+
+<!-- Bootstrap JS and Popper.js (if needed) -->
+{% bootstrap_javascript %}
+
+<!-- Optional: Add your custom scripts here -->
+
+</body>
+</html>

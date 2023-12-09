@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div style="padding-top: 50px;">
+        <h1>Редактировать запись</h1>
+    </div>
+    <form method="post" action="{% url 'edit_expense' pk=form.instance.pk %}" class="mt-3 needs-validation" novalidate>
+
+        {% csrf_token %}
+
+        <div class="mb-3">
+            {{ form.model_name.label_tag }}
+            {{ form.model_name }}
+            <div class="mt-3">
+            {{ form.model_name_comment }}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            {{ form.name_fabric.label_tag }}
+            {{ form.name_fabric }}
+            <div class="mt-3">
+            {{ form.name_fabric_comment }}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            {{ form.fabric.label_tag }}
+            {{ form.fabric }}
+            <div class="mt-3">
+            {{ form.fabric_comment }}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            {{ form.accessories.label_tag }}
+            {{ form.accessories }}
+            <div class="mt-3">
+            {{ form.accessories_comment }}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            {{ form.threads.label_tag }}
+            {{ form.threads }}
+            <div class="mt-3">
+            {{ form.threads_comment }}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            {{ form.other.label_tag }}
+            {{ form.other }}
+            <div class="mt-3">
+            {{ form.other_comment }}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            {{ form.sewing.label_tag }}
+            {{ form.sewing }}
+            <div class="mt-3">
+            {{ form.sewing_comment }}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </form>
+    <a href="{% url 'expenses_list' %}" class="btn btn-secondary mt-3">Назад</a>
+</div>
+
+<!-- Include Bootstrap JS and CSS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}

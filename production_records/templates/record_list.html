@@ -1,0 +1,91 @@
+<!-- templates/record_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>ФАБРИКА (пошив)</h1>
+
+    <!-- Форма фильтрации -->
+    <form method="get" action="{% url 'record_list' %}" class="mb-3">
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label for="model_filter" class="form-label">Модель:</label>
+                <input type="text" name="model_filter" id="model_filter" class="form-control"
+                       value="{{ model_filter }}">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="name_filter" class="form-label">Мастер:</label>
+                <input type="text" name="name_filter" id="name_filter" class="form-control" value="{{ name_filter }}">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="date_filter_start" class="form-label">С какой даты:</label>
+                <input type="date" name="date_filter_start" id="date_filter_start" class="form-control"
+                       value="{{ date_filter_start }}">
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="date_filter_end" class="form-label">До какой даты:</label>
+                <input type="date" name="date_filter_end" id="date_filter_end" class="form-control"
+                       value="{{ date_filter_end }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-outline-primary m-2" style="margin-left: auto !important;">Фильтр</button>
+                <a href="{% url 'record_list' %}" class="btn btn-outline-secondary m-2">Очистить</a>
+            </div>
+        </div>
+    </form>
+    <a href="{% url 'add_record' %}" class="btn btn-outline-primary color-green">Создать</a>
+    <a href="{% url 'export_records' %}?name_filter={{ name_filter }}&model_filter={{ model_filter }}&date_filter_start={{ date_filter_start }}&date_filter_end={{ date_filter_end }}"
+       class="btn btn-success m-2">
+        <img style="width: 25px; height: 25px !important;"
+             src="https://i0.wp.com/olap.com/wp-content/uploads/2013/11/Excel_2013_logo.png?fit=256%2C256&ssl=1">
+        Экспорт Excel
+    </a>
+
+
+    <!-- Ссылка на главную -->
+
+
+    <!-- Таблица записей -->
+    <div class="table-responsive mt-3">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Название модели</th>
+                <th>Мастер</th>
+                <th>Количество</th>
+                <th>Принял</th>
+                <th>Цена за ед.</th>
+                <th>Итого</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.date|date:"d.m.Y" }}</td>
+                <td>{{ record.model }}</td>
+                <td>{{ record.name }}</td>
+                <td>{{ record.quantity }}</td>
+                <td>{{ record.received_by }}</td>
+                <td>{{ record.price }}</td>
+                <td>{{ record.total }}</td>
+                <td>
+                    <a href="{% url 'edit_record' pk=record.pk %}" class="btn btn-secondary btn-sm">Редактировать</a>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="6"></td>
+                <td class="fw-bold">Итого:</td>
+                <td class="fw-bold">{{ total_total }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Кнопки для создания и экспорта записей -->
+
+</div>
+{% endblock %}

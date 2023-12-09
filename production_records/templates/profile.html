@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Профиль пользователя</h1>
+
+    <div class="row">
+        <!-- Редактируемые данные пользователя -->
+        <div class="col-md-9">
+            <div class="profile-info" style="background-color: #f8f9fa; padding: 20px; border: 1px solid #dee2e6; border-radius: 5px;">
+                <h5>Имя: {{ user.first_name }} {{ user.last_name }}</h5>
+                <p>Email: {{ user.email }}</p>
+                <p>Телефон: {{ user.profile.phone_number }}</p>
+                <p>Адрес: {{ user.profile.address }}</p>
+                <p>Хобби: {{ user.profile.hobby }}</p>
+
+                <!-- Кнопка "Редактировать" -->
+                <button type="button" class="btn btn-primary mb-3" onclick="toggleEditForm()">Редактировать</button>
+            </div>
+
+            <!-- Форма для редактирования данных пользователя (изначально скрыта) -->
+            <form method="post" id="editForm" style="display: none; margin-top: 20px;">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="first_name">Имя:</label>
+                    <input type="text" name="first_name" value="{{ user.first_name }}" class="form-control mb-2">
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name">Фамилия:</label>
+                    <input type="text" name="last_name" value="{{ user.last_name }}" class="form-control mb-2">
+                </div>
+
+                <div class="form-group">
+                    <label for="user_email">Email:</label>
+                    <input type="email" name="email" value="{{ user.email }}" class="form-control mb-2">
+                </div>
+
+                <div class="form-group">
+                    <label for="hobby">Хобби:</label>
+                    <input type="text" name="hobby" value="{{ user.profile.hobby }}" class="form-control mb-2">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone_number">Телефон:</label>
+                    <input type="text" name="phone_number" value="{{ user.profile.phone_number }}" class="form-control mb-2">
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Адрес:</label>
+                    <textarea name="address" class="form-control mb-2">{{ user.profile.address }}</textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Сохранить изменения</button>
+             </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleEditForm() {
+        var editForm = document.getElementById('editForm');
+        editForm.style.display = (editForm.style.display === 'none' || editForm.style.display === '') ? 'block' : 'none';
+    }
+</script>
+{% endblock %}

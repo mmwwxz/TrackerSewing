@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - my-network
+    env_file:
+      - .env
+
+  web:
+    build: .
+    command: sh -c "sleep 10 && python manage.py migrate && python manage.py shell && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 80:8000
+    networks:
+      - my-network
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+volumes:
+  postgres_data:
+
+networks:
+  my-network:
